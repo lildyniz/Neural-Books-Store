@@ -1,0 +1,51 @@
+{% extends "store/base.html" %}
+
+
+{% block title %}
+    {{ book.name }}
+{% endblock title %}
+    
+{% block content %}
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-4">
+                <img src="{{ book.image.url }}" class="img-fluid rounded" alt="{{ book.title }}">
+            </div>
+            <div class="col-md-8">
+                <h1>{{ book.name }}</h1>
+                <hr>
+                <p class="text-muted">
+                    {% for a in book.author.all %}
+                        <a href="{{ a.get_absolute_url }}" class="link-dark">{{ a.name }}</a>
+                    {% endfor %}
+                    <br>
+                    <hr>
+                    {% for c in book.category.all %}
+                        <a href="{{ c.get_absolute_url }}" class="link-dark">{{ c.name }}</a>
+                    {% endfor %}
+                    <br>
+                    {{ book.published_date }}
+                </p>
+                <hr>
+                <p>{{ book.description }}</p>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>
+                            <strong>Цена:</strong> {{ book.price }} руб.
+                        </p>
+                    </div>
+                    <hr>
+                        {% comment %}
+                        <div class="col-md-6">
+                            <form action="{% url 'add_to_cart' book.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary">Добавить в корзину</button>
+                            </form>
+                        </div>
+                        {% endcomment %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

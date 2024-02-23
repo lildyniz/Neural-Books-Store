@@ -1,0 +1,247 @@
+{% extends "store/base.html" %}
+{% load static %}
+{% debug %}
+{% load bootstrap_icons %}
+
+{% block title %}
+    {% if category %}{{ category.name }}{% else %}Books{% endif %}
+{% endblock title %}
+
+{% block content %}
+<div class="container text-center my-5">
+    <h2 class="mb-4">Рекомендуемое</h2>
+    <div id="carouselRecommended" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active" data-bs-interval="20000">
+                <div class="row justify-content-md-center">
+                    {% for book in books|slice:":6" %}
+                        <div class="col-md-auto">
+                            <div class="card text-center" style="width: 12rem;">
+                                <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top" alt="{{ book.title }}"></a>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ book.name|truncatechars:13 }}</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">
+                                        {% for a in book.author.all %}
+                                            <a href="{{ a.get_absolute_url }}" class="link-dark">{{ a.name }}</a>
+                                        {% endfor %}
+                                    </h6>
+                                    <a href="{{ book.get_absolute_url }}" class="btn btn-dark">{{ book.price }}₽</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>    
+            </div>
+        <div class="carousel-item" data-bs-interval="20000">
+            <div class="row justify-content-md-center">
+                {% for book in books|slice:"6:12" %}
+                    <div class="col-md-auto">
+                        <div class="card text-center" style="width: 12rem;">
+                            <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top" alt="{{ book.title }}"></a>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ book.name|truncatechars:13 }}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    {% for a in book.author.all %}
+                                        <a href="{{ a.get_absolute_url }}" class="link-dark">{{ a.name }}</a>
+                                    {% endfor %}
+                                </h6>
+                                <a href="{{ book.get_absolute_url }}" class="btn  btn-dark">{{ book.price }}₽</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>  
+        </div>
+        <div class="carousel-item" data-bs-interval="20000">
+            <div class="row justify-content-md-center">
+                {% for book in books|slice:"8:16" %}
+                    <div class="col-md-auto">
+                        <div class="card text-center" style="width: 12rem;">
+                            <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top" alt="{{ book.title }}"></a>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ book.name|truncatechars:13  }}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    {% for a in book.author.all %}
+                                        <a href="{{ a.get_absolute_url }}" class="link-dark">{{ a.name }}</a>
+                                    {% endfor %}
+                                </h6>
+                                <a href="{{ book.get_absolute_url }}" class="btn  btn-dark">{{ book.price }}₽</a>
+                                <a href="{{ book.get_absolute_url }}" class="btn  btn-dark">{% bs_icon 'basket2-fill' size='1.5em' %}</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        </div>
+        <button class="btn btn-dark" type="button" data-bs-target="#carouselRecommended" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Предыдущий</span>
+        </button>
+        <button class="btn btn-dark" type="button" data-bs-target="#carouselRecommended" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Следующий</span>
+        </button>
+    </div>
+</div>
+<div class="container text-center my-5">
+    <h2 class="mb-4">Новинки</h2>
+    <div id="carouselNew" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active" data-bs-interval="20000">
+                <div class="row justify-content-md-center">
+                    {% for book in books|slice:":6" %}
+                        <div class="col-md-auto">
+                            <div class="card text-center" style="width: 12rem;">
+                                <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top" alt="{{ book.title }}"></a>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ book.name|truncatechars:13 }}</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">
+                                        {% for a in book.author.all %}
+                                            <a href="{{ a.get_absolute_url }}" class="link-dark">{{ a.name }}</a>
+                                        {% endfor %}
+                                    </h6>
+                                    <!-- <p class="card-text">
+                                        {% for c in book.category.all %}
+                                            <a href="#" class="card-link">{{ c.name }}</a>
+                                        {% endfor %}
+                                    </p> -->
+                                    <a href="{{ book.get_absolute_url }}" class="btn btn-dark">{{ book.price }}₽</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>    
+            </div>
+        <div class="carousel-item" data-bs-interval="20000">
+            <div class="row justify-content-md-center">
+                {% for book in books|slice:"6:12" %}
+                    <div class="col-md-auto">
+                        <div class="card text-center" style="width: 12rem;">
+                            <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top" alt="{{ book.title }}"></a>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ book.name|truncatechars:13 }}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    {% for a in book.author.all %}
+                                        <a href="{{ a.get_absolute_url }}" class="link-dark">{{ a.name }}</a>
+                                    {% endfor %}
+                                </h6>
+                                <a href="{{ book.get_absolute_url }}" class="btn  btn-dark">{{ book.price }}₽</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>  
+        </div>
+        <div class="carousel-item" data-bs-interval="20000">
+            <div class="row justify-content-md-center">
+                {% for book in books|slice:"8:16" %}
+                    <div class="col-md-auto">
+                        <div class="card text-center" style="width: 12rem;">
+                            <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top" alt="{{ book.title }}"></a>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ book.name|truncatechars:13  }}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    {% for a in book.author.all %}
+                                        <a href="{{ a.get_absolute_url }}" class="link-dark">{{ a.name }}</a>
+                                    {% endfor %}
+                                </h6>
+                                <a href="{{ book.get_absolute_url }}" class="btn  btn-dark">{{ book.price }}₽</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        </div>
+        <button class="btn btn-dark" type="button" data-bs-target="#carouselNew" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Предыдущий</span>
+        </button>
+        <button class="btn btn-dark" type="button" data-bs-target="#carouselNew" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Следующий</span>
+        </button>
+    </div>
+</div>
+<div class="container text-center my-5">
+    <h2 class="mb-4">Лучшее</h2>
+    <div id="carouselBest" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active" data-bs-interval="20000">
+                <div class="row justify-content-md-center">
+                    {% for book in books|slice:":6" %}
+                        <div class="col-md-auto">
+                            <div class="card text-center" style="width: 12rem;">
+                                <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top" alt="{{ book.title }}"></a>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ book.name|truncatechars:13 }}</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">
+                                        {% for a in book.author.all %}
+                                            <a href="{{ a.get_absolute_url }}" class="link-dark">{{ a.name }}</a>
+                                        {% endfor %}
+                                    </h6>
+                                    <!-- <p class="card-text">
+                                        {% for c in book.category.all %}
+                                            <a href="#" class="card-link">{{ c.name }}</a>
+                                        {% endfor %}
+                                    </p> -->
+                                    <a href="{{ book.get_absolute_url }}" class="btn btn-dark">{{ book.price }}₽</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>    
+            </div>
+        <div class="carousel-item" data-bs-interval="20000">
+            <div class="row justify-content-md-center">
+                {% for book in books|slice:"6:12" %}
+                    <div class="col-md-auto">
+                        <div class="card text-center" style="width: 12rem;">
+                            <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top" alt="{{ book.title }}"></a>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ book.name|truncatechars:13 }}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    {% for a in book.author.all %}
+                                        <a href="{{ a.get_absolute_url }}" class="link-dark">{{ a.name }}</a>
+                                    {% endfor %}
+                                </h6>
+                                <a href="{{ book.get_absolute_url }}" class="btn  btn-dark">{{ book.price }}₽</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>  
+        </div>
+        <div class="carousel-item" data-bs-interval="20000">
+            <div class="row justify-content-md-center">
+                {% for book in books|slice:"8:16" %}
+                    <div class="col-md-auto">
+                        <div class="card text-center" style="width: 12rem;">
+                            <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top" alt="{{ book.title }}"></a>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ book.name|truncatechars:13  }}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    {% for a in book.author.all %}
+                                        <a href="{{ a.get_absolute_url }}" class="link-dark">{{ a.name }}</a>
+                                    {% endfor %}
+                                </h6>
+                                <a href="{{ book.get_absolute_url }}" class="btn  btn-dark">{{ book.price }}₽</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        </div>
+        <button class="btn btn-dark" type="button" data-bs-target="#carouselBest" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Предыдущий</span>
+        </button>
+        <button class="btn btn-dark" type="button" data-bs-target="#carouselBest" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Следующий</span>
+        </button>
+    </div>
+</div>
+{% endblock %}
