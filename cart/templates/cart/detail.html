@@ -1,0 +1,101 @@
+{% extends "store/base.html" %}
+
+{% block title %}
+    Корзина
+{% endblock %}
+
+{% block content %}
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Корзина</h1>
+            <hr>
+            <div class="row">
+                <div class="col-md-8">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Наименование</th>
+                                <th>Цена</th>
+                                <th>Удалить</th>
+                                <th>Количество</th>
+                                <th>Стоимость</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in cart %}
+                                {% with book=item.book %}
+                                    <tr>
+                                        <td>
+                                            <a href="{{ book.get_absolute_url }}">
+                                                <img src="{{ book.image.url }}" class="img-fluid" style="width: 50px;">
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ book.get_absolute_url }}">{{ book.name }}</a>
+                                        </td>
+                                        <td>{{ book.price }} руб.</td>
+                                        <td>
+                                            <form action="{% url 'cart:cart_remove' book.id %}" method="post">
+                                                {% csrf_token %}
+                                                <input type="submit" value="Remove">
+                                            </form>
+                                        </td>
+                                        <td>
+                                                <form action="{% url 'cart:cart_add' book.id %}" method="post">
+                                                {{ item.update_quantity_form.quantity }}
+                                                {{ item.update_quantity_form.override }}
+                                                <input type="submit" value="Update">
+                                                {% csrf_token %}
+                                                </form>
+                                        </td>
+                                        <td>{{ cart.get_total_price }} руб.</td>
+                                    </tr>
+                                {% endwith %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3>Итого</h3>
+                            <hr>
+                            <p>Товаров: {{ cart.items.count }}</p>
+                            <p>Стоимость: {{ cart.get_total_price }} руб.</p>
+                            <hr>
+                            <a href="#" class="btn btn-primary btn-block">Оформить заказ</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        var $quantity = $('input[name="quantity"]');
+        var $quantityMin = $('input[name="quantity_min"]');
+        var $quantityMax = $('input[name="quantity_max"]');
+    
+        $('.btn[data-action]').on('click', function() {
+        var action = $(this).data('action');
+        var quantity = parseInt($quantity.val());
+        var min = parseInt($quantityMin.val());
+        var max = parseInt($quantityMax.val());
+    
+        if (action === 'increase') {
+            quantity = Math.min(quantity + 1, max);
+        } else if (action === 'decrease') {
+            quantity = Math.max(quantity - 1, min);
+        }
+    
+        $quantity.val(quantity);
+        });
+    });
+</script>

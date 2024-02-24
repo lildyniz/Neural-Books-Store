@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Category, Author, Book
+from cart.forms import CartAddProductForm
 
 
 def index(request):
@@ -47,8 +48,10 @@ def book_detail(request, id, slug):
                              available=True)
     categories = Category.objects.all()
     authors = Author.objects.all()
+    cart_product_form = CartAddProductForm()
     return render(request,
                   'store/book/detail.html',
                   {'book': book,
                    'categories': categories,
-                   'authors': authors})
+                   'authors': authors,
+                   'cart_product_form': cart_product_form})

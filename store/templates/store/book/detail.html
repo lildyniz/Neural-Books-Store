@@ -34,6 +34,11 @@
                         <p>
                             <strong>Цена:</strong> {{ book.price }} руб.
                         </p>
+                        <form action="{% url 'cart:cart_add' book.id %}" method="post">
+                            {{ cart_product_form }}
+                            {% csrf_token %}
+                            <input type="submit" value="Add to cart">
+                        </form>
                     </div>
                     <hr>
                         {% comment %}
