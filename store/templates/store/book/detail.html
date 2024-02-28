@@ -1,4 +1,5 @@
 {% extends "store/base.html" %}
+{% load bootstrap_icons %}
 
 
 {% block title %}
@@ -12,16 +13,19 @@
                 <img src="{{ book.image.url }}" class="img-fluid rounded" alt="{{ book.title }}">
             </div>
             <div class="col-md-8">
-                <h1>{{ book.name }}</h1>
-                <hr>
-                <p class="text-muted">
+                <h1>
+                    {{ book.name }}
+                    {% if book.discount %}
+                        <span class="badge rounded-pill bg-Dark fs-6 text position-absolute mt-1 ms-2">-{{ book.discount }}%</span>
+                    {% endif %}
+                </h1>
+                <p>
                     {% for a in book.author.all %}
-                        <a href="{{ a.get_absolute_url }}" class="link-dark">{{ a.name }}</a>
+                        <a href="{{ a.get_absolute_url }}" class="link-dark text-decoration-none fs-5 text">{{ a.name }}</a>
                     {% endfor %}
                     <br>
-                    <hr>
                     {% for c in book.category.all %}
-                        <a href="{{ c.get_absolute_url }}" class="link-dark">{{ c.name }}</a>
+                        <a href="{{ c.get_absolute_url }}" class="link-dark text-decoration-none">{{ c.name }}</a>
                     {% endfor %}
                     <br>
                     {{ book.published_date }}
@@ -30,9 +34,18 @@
                 <p>{{ book.description }}</p>
                 <hr>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-6"> 
+                        {% if book.discount %}
+                            <p>
+                                <strong>Цена:</strong> <span class="fs-5">{{ book.discounted_price }}</span> ₽ <span class="fs-7 text-decoration-line-through text-secondary">{{ book.price }}</span>
+                            </p>
+                        {% else %}
+                            <p>
+                                <strong>Цена:</strong> {{ book.price }} ₽
+                            </p>
+                        {% endif %}
                         <p>
-                            <strong>Цена:</strong> {{ book.price }} руб.
+                            <strong>ID товара:</strong> {{ book.display_id }}
                         </p>
                         <form action="{% url 'cart:cart_add' book.id %}" method="post">
                             {{ cart_product_form }}

@@ -4,6 +4,8 @@
 {% bootstrap_messages %}
 {% load bootstrap_icons %}
 {% load static %}
+{% load store_tags %}
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -35,7 +37,7 @@
                             <i class="fa fa-shopping-cart"></i>
                             <span class="badge bg-light text-primary rounded-pill ms-1">0</span>
                         </a>
-                        <a href="#" class="btn  btn-dark">{% bs_icon 'basket2-fill' size='1.5em' %}</a>
+                        <a href="{% url 'cart:cart_detail' %}" class="btn  btn-dark">{% bs_icon 'basket2-fill' size='1.5em' %}</a>
                     </div>
                 </div>
             </div>
@@ -52,6 +54,7 @@
                         Категории
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                        {% tag_categories as categories %}
                         {% for c in categories %}
                             <li><a class="dropdown-item" href="{{ c.get_absolute_url }}">{{ c.name }}</a></li>
                         {% endfor %}
@@ -62,6 +65,7 @@
                         Авторы
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                        {% tag_authors as authors %}
                         {% for a in authors %}
                             <li><a class="dropdown-item" href="{{ a.get_absolute_url }}">{{ a.name }}</a></li>
                         {% endfor %}

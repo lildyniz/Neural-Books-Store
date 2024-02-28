@@ -11,18 +11,13 @@
 {% block content %}
 
 {% if author %}
-    <!-- <div class="text-center mt-5">
-        <img src="{{ author.image.url }}" class="rounded-circle" style="width: 100px; height: 100px;">
-        <h3 class="my-2">{{ author.name }}</h3>
-        <p class="text-muted">{{ author.birth }} г., {{ author.country }}</p>
-    </div> -->
     <div class="container my-5">
         <div class="row">
             <div class="col-md-3">
                 <div class="text-center">
                     <img src="{{ author.image.url }}" class="rounded-circle" style="width: 100px; height: 100px;">
                     <h3 class="my-2">{{ author.name }}</h3>
-                    <p class="text-muted">{{ author.birth }} г., {{ author.country }}</p>
+                    <p class="text-muted">{{ author.birth }}, {{ author.country }}</p>
                 </div>
             </div>
             <div class="col-md-9">
@@ -38,15 +33,25 @@
         {% for book in books %}
             <div class="col-md-auto">
                 <div class="card text-center" style="width: 11rem;">
-                    <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top" alt="{{ book.title }}"></a>
+                    <div class="position-relative">
+                        <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top" alt="{{ book.title }}"></a>
+                        {% if book.discount %}
+                            <span class="badge bg-dark position-absolute top-0 end-0" style="font-size: 18px; ">-{{ book.discount }}%</span>
+                        {% endif %}
+                    </div>
                     <div class="card-body">
                         <h5 class="card-title">{{ book.name|truncatechars:9 }}</h5>
                         <h6 class="card-subtitle mb-2 text-muted">
                             {% for a in book.author.all %}
-                                <a href="{{ a.get_absolute_url }}" class="link-dark">{{ a.name|truncatechars:13 }}</a>
+                                <a href="{{ a.get_absolute_url }}" class="link-dark text-decoration-none">{{ a.name|truncatechars:13 }}</a>
                             {% endfor %}
                         </h6>
-                        <a href="{{ book.get_absolute_url }}" class="btn btn-dark">{{ book.price }}₽</a>
+                        {% if book.discount %}
+                            <a href="{{ book.get_absolute_url }}" class="btn btn-dark">{% bs_icon 'basket2-fill' size='0.9em' %}{{ book.discounted_price }}₽</a>
+                            <span class="text-decoration-line-through text-secondary" style="font-size: 10px;">{{ book.price }}</span>
+                        {% else %}
+                            <a href="{{ book.get_absolute_url }}" class="btn btn-dark">{% bs_icon 'basket2-fill' size='0.9em' %}{{ book.price }}₽</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
