@@ -32,18 +32,18 @@
     <div class="row justify-content-md-center">
         {% for book in books %}
             <div class="col-md-auto">
-                <div class="card text-center" style="width: 11rem;">
+                <div class="card text-center mb-3" style="width: 11rem;">
                     <div class="position-relative">
-                        <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top" alt="{{ book.title }}"></a>
+                        <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top width="250" height="280"" alt="{{ book.title }}"></a>
                         {% if book.discount %}
                             <span class="badge bg-dark position-absolute top-0 end-0" style="font-size: 18px; ">-{{ book.discount }}%</span>
                         {% endif %}
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">{{ book.name|truncatechars:9 }}</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">
+                        <h6 class="card-title">{{ book.name|truncatechars:14}}</h6>
+                        <h6 class="card-subtitle mb-2">
                             {% for a in book.author.all %}
-                                <a href="{{ a.get_absolute_url }}" class="link-dark text-decoration-none">{{ a.name|truncatechars:13 }}</a>
+                                <a href="{{ a.get_absolute_url }}" class="text-muted text-decoration-none" style="font-size: 15px;">{{ a.name|truncatechars:14 }}</a>
                             {% endfor %}
                         </h6>
                         {% if book.discount %}
@@ -58,5 +58,27 @@
         {% endfor %}
     </div>
 </div>
+
+<nav aria-label="Пагинация">
+    <ul class="pagination justify-content-center">
+        <li class="page-item {% if not books.has_previous %}disabled{% endif %}">
+            <a class="page-link text-dark " href="{% if books.has_previous %}?page={{books.previous_page_number}}{% else %}#{% endif %}">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        {% for page in books.paginator.page_range %}
+            {% if page >= books.number|add:-2 and page <= books.number|add:2 %}
+                <li class="page-item {% if books.number == page %}active{% endif %}">
+                    <a class="page-link text-dark bg-white" href="?page={{page}}">{{ page }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+        <li class="page-item">
+            <a class="page-link text-dark " href="{% if books.has_next %}?page={{books.next_page_number}}{% else %}#{% endif %}">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
 {% endblock content %}
     

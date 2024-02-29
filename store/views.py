@@ -1,6 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, get_list_or_404
 from .models import Category, Author, Book
 from cart.forms import CartAddProductForm
+from django.core.paginator import Paginator
 
 
 def index(request):
@@ -17,6 +18,9 @@ def index(request):
 
 
 def book_list(request, slug=None):
+
+    page = request.GET.get('page', 1)
+
     category = None
     author = None
     books = Book.objects.filter(available=True)
@@ -24,10 +28,15 @@ def book_list(request, slug=None):
     if slug:
         try:
             category = get_object_or_404(Category, slug=slug)
-            books = books.filter(category=category)
+            books = get_list_or_404(books.filter(category=category))
         except:
             author = get_object_or_404(Author, slug=slug)
-            books = books.filter(author=author)
+            books = get_list_or_404(books.filter(author=author))
+            # Надо добавить проверку get_list_or_404(), что бы в случае 
+            # отсутствия у автора/категории книг выводилась страница "Упс. Ничего нет".
+
+    paginator = Paginator(books, 12)
+    current_page = paginator.page(page)
 
     return render(
         request,
@@ -35,7 +44,8 @@ def book_list(request, slug=None):
         {
             "category": category,
             "author": author,
-            "books": books,
+            "books": current_page,
+            'slug_url': slug
         },
     )
 

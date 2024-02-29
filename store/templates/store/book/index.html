@@ -16,18 +16,18 @@
                 <div class="row justify-content-md-center">
                     {% for book in books|slice:":6" %}
                         <div class="col-md-auto">
-                            <div class="card text-center" style="width: 12rem;">
+                            <div class="card text-center" style="width: 11rem;">
                                 <div class="position-relative">
-                                    <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top" alt="{{ book.title }}"></a>
+                                    <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top width="250" height="280"" alt="{{ book.title }}"></a>
                                     {% if book.discount %}
                                         <span class="badge bg-dark position-absolute top-0 end-0" style="font-size: 18px; ">-{{ book.discount }}%</span>
                                     {% endif %}
                                 </div>
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ book.name|truncatechars:13 }}</h5>
-                                    <h6 class="card-subtitle mb-2 text-muted">
+                                    <h6 class="card-title">{{ book.name|truncatechars:14 }}</h6>
+                                    <h6 class="card-subtitle mb-2">
                                         {% for a in book.author.all %}
-                                            <a href="{{ a.get_absolute_url }}" class="link-dark text-decoration-none">{{ a.name }}</a>
+                                            <a href="{{ a.get_absolute_url }}" class="text-muted text-decoration-none" style="font-size: 15px;">{{ a.name|truncatechars:14 }}</a>
                                         {% endfor %}
                                     </h6>
                                     {% if book.discount %}
@@ -46,18 +46,18 @@
             <div class="row justify-content-md-center">
                 {% for book in books|slice:"6:12" %}
                     <div class="col-md-auto">
-                        <div class="card text-center" style="width: 12rem;">
+                        <div class="card text-center" style="width: 11rem;">
                             <div class="position-relative">
-                                <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top" alt="{{ book.title }}"></a>
+                                <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top width="250" height="280"" alt="{{ book.title }}"></a>
                                 {% if book.discount %}
                                     <span class="badge bg-dark position-absolute top-0 end-0" style="font-size: 18px; ">-{{ book.discount }}%</span>
                                 {% endif %}
                             </div>
                             <div class="card-body">
-                                <h5 class="card-title">{{ book.name|truncatechars:13 }}</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">
+                                <h6 class="card-title">{{ book.name|truncatechars:14 }}</h6>
+                                <h6 class="card-subtitle mb-2">
                                     {% for a in book.author.all %}
-                                        <a href="{{ a.get_absolute_url }}" class="link-dark text-decoration-none">{{ a.name }}</a>
+                                        <a href="{{ a.get_absolute_url }}" class="text-muted text-decoration-none" style="font-size: 15px;">{{ a.name|truncatechars:14 }}</a>
                                     {% endfor %}
                                 </h6>
                                 {% if book.discount %}
@@ -74,20 +74,20 @@
         </div>
         <div class="carousel-item" data-bs-interval="20000">
             <div class="row justify-content-md-center">
-                {% for book in books|slice:"8:16" %}
+                {% for book in books|slice:"12:18" %}
                     <div class="col-md-auto">
-                        <div class="card text-center" style="width: 12rem;">
+                        <div class="card text-center" style="width: 11rem;">
                             <div class="position-relative">
-                                <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top" alt="{{ book.title }}"></a>
+                                <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top width="250" height="280"" alt="{{ book.title }}"></a>
                                 {% if book.discount %}
                                     <span class="badge bg-dark position-absolute top-0 end-0" style="font-size: 18px; ">-{{ book.discount }}%</span>
                                 {% endif %}
                             </div>
                             <div class="card-body">
-                                <h5 class="card-title">{{ book.name|truncatechars:13  }}</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">
+                                <h6 class="card-title">{{ book.name|truncatechars:14 }}</h6>
+                                <h6 class="card-subtitle mb-2">
                                     {% for a in book.author.all %}
-                                        <a href="{{ a.get_absolute_url }}" class="link-dark text-decoration-none">{{ a.name }}</a>
+                                        <a href="{{ a.get_absolute_url }}" class="text-muted text-decoration-none" style="font-size: 15px;">{{ a.name|truncatechars:14 }}</a>
                                     {% endfor %}
                                 </h6>
                                 {% if book.discount %}
@@ -121,18 +121,18 @@
                 <div class="row justify-content-md-center">
                     {% for book in books|slice:":6" %}
                         <div class="col-md-auto">
-                            <div class="card text-center" style="width: 12rem;">
+                            <div class="card text-center" style="width: 11rem;">
                                 <div class="position-relative">
-                                    <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top" alt="{{ book.title }}"></a>
+                                    <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top width="250" height="280"" alt="{{ book.title }}"></a>
                                     {% if book.discount %}
                                         <span class="badge bg-dark position-absolute top-0 end-0" style="font-size: 18px; ">-{{ book.discount }}%</span>
                                     {% endif %}
                                 </div>
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ book.name|truncatechars:13 }}</h5>
-                                    <h6 class="card-subtitle mb-2 text-muted">
+                                    <h6 class="card-title">{{ book.name|truncatechars:14 }}</h6>
+                                    <h6 class="card-subtitle mb-2">
                                         {% for a in book.author.all %}
-                                            <a href="{{ a.get_absolute_url }}" class="link-dark text-decoration-none">{{ a.name }}</a>
+                                            <a href="{{ a.get_absolute_url }}" class="text-muted text-decoration-none" style="font-size: 15px;">{{ a.name|truncatechars:14 }}</a>
                                         {% endfor %}
                                     </h6>
                                     {% if book.discount %}
@@ -151,18 +151,18 @@
             <div class="row justify-content-md-center">
                 {% for book in books|slice:"6:12" %}
                     <div class="col-md-auto">
-                        <div class="card text-center" style="width: 12rem;">
+                        <div class="card text-center" style="width: 11rem;">
                             <div class="position-relative">
-                                <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top" alt="{{ book.title }}"></a>
+                                <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top width="250" height="280"" alt="{{ book.title }}"></a>
                                 {% if book.discount %}
                                     <span class="badge bg-dark position-absolute top-0 end-0" style="font-size: 18px; ">-{{ book.discount }}%</span>
                                 {% endif %}
                             </div>
                             <div class="card-body">
-                                <h5 class="card-title">{{ book.name|truncatechars:13 }}</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">
+                                <h6 class="card-title">{{ book.name|truncatechars:14 }}</h6>
+                                <h6 class="card-subtitle mb-2">
                                     {% for a in book.author.all %}
-                                        <a href="{{ a.get_absolute_url }}" class="link-dark text-decoration-none">{{ a.name }}</a>
+                                        <a href="{{ a.get_absolute_url }}" class="text-muted text-decoration-none" style="font-size: 15px;">{{ a.name|truncatechars:14 }}</a>
                                     {% endfor %}
                                 </h6>
                                 {% if book.discount %}
@@ -179,20 +179,20 @@
         </div>
         <div class="carousel-item" data-bs-interval="20000">
             <div class="row justify-content-md-center">
-                {% for book in books|slice:"8:16" %}
+                {% for book in books|slice:"12:18" %}
                     <div class="col-md-auto">
-                        <div class="card text-center" style="width: 12rem;">
+                        <div class="card text-center" style="width: 11rem;">
                             <div class="position-relative">
-                                <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top" alt="{{ book.title }}"></a>
+                                <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top width="250" height="280"" alt="{{ book.title }}"></a>
                                 {% if book.discount %}
                                     <span class="badge bg-dark position-absolute top-0 end-0" style="font-size: 18px; ">-{{ book.discount }}%</span>
                                 {% endif %}
                             </div>
                             <div class="card-body">
-                                <h5 class="card-title">{{ book.name|truncatechars:13  }}</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">
+                                <h6 class="card-title">{{ book.name|truncatechars:14 }}</h6>
+                                <h6 class="card-subtitle mb-2">
                                     {% for a in book.author.all %}
-                                        <a href="{{ a.get_absolute_url }}" class="link-dark text-decoration-none">{{ a.name }}</a>
+                                        <a href="{{ a.get_absolute_url }}" class="text-muted text-decoration-none" style="font-size: 15px;">{{ a.name|truncatechars:14 }}</a>
                                     {% endfor %}
                                 </h6>
                                 {% if book.discount %}
@@ -226,18 +226,18 @@
                 <div class="row justify-content-md-center">
                     {% for book in books|slice:":6" %}
                         <div class="col-md-auto">
-                            <div class="card text-center" style="width: 12rem;">
+                            <div class="card text-center" style="width: 11rem;">
                                 <div class="position-relative">
-                                    <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top" alt="{{ book.title }}"></a>
+                                    <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top width="250" height="280"" alt="{{ book.title }}"></a>
                                     {% if book.discount %}
                                         <span class="badge bg-dark position-absolute top-0 end-0" style="font-size: 18px; ">-{{ book.discount }}%</span>
                                     {% endif %}
                                 </div>
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ book.name|truncatechars:13 }}</h5>
-                                    <h6 class="card-subtitle mb-2 text-muted">
+                                    <h6 class="card-title">{{ book.name|truncatechars:14 }}</h6>
+                                    <h6 class="card-subtitle mb-2">
                                         {% for a in book.author.all %}
-                                            <a href="{{ a.get_absolute_url }}" class="link-dark text-decoration-none">{{ a.name }}</a>
+                                            <a href="{{ a.get_absolute_url }}" class="text-muted text-decoration-none" style="font-size: 15px;">{{ a.name|truncatechars:14 }}</a>
                                         {% endfor %}
                                     </h6>
                                     {% if book.discount %}
@@ -256,18 +256,18 @@
             <div class="row justify-content-md-center">
                 {% for book in books|slice:"6:12" %}
                     <div class="col-md-auto">
-                        <div class="card text-center" style="width: 12rem;">
+                        <div class="card text-center" style="width: 11rem;">
                             <div class="position-relative">
-                                <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top" alt="{{ book.title }}"></a>
+                                <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top width="250" height="280"" alt="{{ book.title }}"></a>
                                 {% if book.discount %}
                                     <span class="badge bg-dark position-absolute top-0 end-0" style="font-size: 18px; ">-{{ book.discount }}%</span>
                                 {% endif %}
                             </div>
                             <div class="card-body">
-                                <h5 class="card-title">{{ book.name|truncatechars:13 }}</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">
+                                <h6 class="card-title">{{ book.name|truncatechars:14 }}</h6>
+                                <h6 class="card-subtitle mb-2">
                                     {% for a in book.author.all %}
-                                        <a href="{{ a.get_absolute_url }}" class="link-dark text-decoration-none">{{ a.name }}</a>
+                                        <a href="{{ a.get_absolute_url }}" class="text-muted text-decoration-none" style="font-size: 15px;">{{ a.name|truncatechars:14 }}</a>
                                     {% endfor %}
                                 </h6>
                                 {% if book.discount %}
@@ -284,20 +284,20 @@
         </div>
         <div class="carousel-item" data-bs-interval="20000">
             <div class="row justify-content-md-center">
-                {% for book in books|slice:"8:16" %}
+                {% for book in books|slice:"12:18" %}
                     <div class="col-md-auto">
-                        <div class="card text-center" style="width: 12rem;">
+                        <div class="card text-center" style="width: 11rem;">
                             <div class="position-relative">
-                                <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top" alt="{{ book.title }}"></a>
+                                <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top width="250" height="280"" alt="{{ book.title }}"></a>
                                 {% if book.discount %}
                                     <span class="badge bg-dark position-absolute top-0 end-0" style="font-size: 18px; ">-{{ book.discount }}%</span>
                                 {% endif %}
                             </div>
                             <div class="card-body">
-                                <h5 class="card-title">{{ book.name|truncatechars:13  }}</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">
+                                <h6 class="card-title">{{ book.name|truncatechars:14 }}</h6>
+                                <h6 class="card-subtitle mb-2">
                                     {% for a in book.author.all %}
-                                        <a href="{{ a.get_absolute_url }}" class="link-dark text-decoration-none">{{ a.name }}</a>
+                                        <a href="{{ a.get_absolute_url }}" class="text-muted text-decoration-none" style="font-size: 15px;">{{ a.name|truncatechars:14 }}</a>
                                     {% endfor %}
                                 </h6>
                                 {% if book.discount %}
