@@ -56,7 +56,9 @@
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                         {% tag_categories as categories %}
                         {% for c in categories %}
-                            <li><a class="dropdown-item" href="{{ c.get_absolute_url }}">{{ c.name }}</a></li>
+                            {% if c.name != 'all' %}
+                              <li><a class="dropdown-item" href="{{ c.get_absolute_url }}">{{ c.name }}</a></li>
+                            {% endif %}
                         {% endfor %}
                     </ul>
                 </li>
@@ -85,7 +87,7 @@
     {% endblock %}
 
     <!-- Footer -->
-<footer class="text-center text-lg-start bg-dark text-white">
+<footer class="text-center text-lg-start bg-dark text-white mt-4">
     <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom bg-light">
     </section>
     <!-- Section: Links  -->

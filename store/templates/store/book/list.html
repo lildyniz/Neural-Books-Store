@@ -29,7 +29,11 @@
 {% endif %}
     
 <div class="container text-center my-5 position-relative">
-    <h2 class="mb-4">Все книги {% if category %}в жанре {{ category.name }} {% elif author %}автора {% else %}{% endif %}</h2>
+    {% if books %}
+        <h2 class="mb-4">Все книги {% if category %}в жанре {{ category.name }} {% elif author %}автора {% else %}{% endif %}</h2>
+    {% else %}
+        <h2 class="mb-4">В данном разделе книг нет..</h2>
+    {% endif %}
      <!-- Форма фильтров -->
      <div class="dropdown mb-2 ps-5 position-absolute top-0">
         <button class="btn btn-secondary dropdown-toggle btn-dark" type="button" data-bs-toggle="dropdown"

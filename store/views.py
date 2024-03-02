@@ -31,12 +31,10 @@ def book_list(request, slug):
     if slug != 'all':
         try:
             category = get_object_or_404(Category, slug=slug)
-            books = get_list_or_404(books.filter(category=category))
+            books = books.filter(category=category)
         except:
             author = get_object_or_404(Author, slug=slug)
-            books = get_list_or_404(books.filter(author=author))
-            # Надо добавить проверку get_list_or_404(), что бы в случае 
-            # отсутствия у автора/категории книг выводилась страница "Упс. Ничего нет".
+            books = books.filter(author=author)
 
     if with_discount:
         books = books.filter(discount__gt=0).order_by('-discount')
