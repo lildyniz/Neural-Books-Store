@@ -49,11 +49,13 @@ class Book(models.Model):
     slug = models.SlugField(max_length=100)
     image = models.ImageField(upload_to="books/%Y/%m/%d", blank=True)
     description = models.TextField(blank=True)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    discount = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100)])
     available = models.BooleanField(default=True)
     written = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(2024)])
     created = models.DateTimeField(auto_now_add=True)
+
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    discount = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100)])
+    total_price = models.DecimalField(max_digits=10, decimal_places=2)
 
     class Meta:
         ordering = ["name"]
@@ -66,6 +68,10 @@ class Book(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def save(self, *args, **kwargs):
+        self.total_price = round(self.price - self.price*self.discount/100, 2)
+        super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse("store:book_detail", args=[self.id, self.slug])
@@ -73,5 +79,7 @@ class Book(models.Model):
     def display_id(self):
         return f'{self.id:05}'
     
-    def discounted_price(self):
-        return round(self.price - self.price*self.discount/100, 2)
+    # def get_total_price(self):
+    #     if self.discount:
+    #         return round(self.price - self.price*self.discount/100, 2)
+    #     return self.price

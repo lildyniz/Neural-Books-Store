@@ -17,7 +17,10 @@ def index(request):
                    'new_books': new_books, 'best_books': best_books},)
 
 
-def book_list(request, slug=None):
+def book_list(request, slug):
+
+    with_discount = request.GET.get('with_discount', None)
+    order_by = request.GET.get('order_by', None)
 
     page = request.GET.get('page', 1)
 
@@ -25,7 +28,7 @@ def book_list(request, slug=None):
     author = None
     books = Book.objects.filter(available=True)
 
-    if slug:
+    if slug != 'all':
         try:
             category = get_object_or_404(Category, slug=slug)
             books = get_list_or_404(books.filter(category=category))
@@ -34,6 +37,11 @@ def book_list(request, slug=None):
             books = get_list_or_404(books.filter(author=author))
             # Надо добавить проверку get_list_or_404(), что бы в случае 
             # отсутствия у автора/категории книг выводилась страница "Упс. Ничего нет".
+
+    if with_discount:
+        books = books.filter(discount__gt=0).order_by('-discount')
+    if order_by and order_by != 'default':
+        books = books.order_by(order_by)
 
     paginator = Paginator(books, 12)
     current_page = paginator.page(page)

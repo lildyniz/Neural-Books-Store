@@ -13,8 +13,8 @@ class AutorAdmin(admin.ModelAdmin):
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
-    list_display = ['name', 'slug', 'price', 'available',
+    list_display = ['name', 'slug', 'total_price', 'available',
                     'written', 'created']
     prepopulated_fields = {'slug': ('name',)}
     list_filter = ['available', 'created']
-    list_editable = ['price', 'available']
+    list_editable = ['total_price', 'available']

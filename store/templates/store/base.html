@@ -72,7 +72,9 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'store:book_list' %}" class="nav-link text-dark">Все книги</a>
+                    {% comment %} <a href="{% url 'store:book_list' all %}" class="nav-link text-dark">Все книги</a> {% endcomment %}
+                    {% tag_category_all as all %}
+                    <a href="{{ all.get_absolute_url }}" class="nav-link text-dark">Все книги</a>
                 </li>
             </ul>
         </div>

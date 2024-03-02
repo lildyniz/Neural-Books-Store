@@ -51,7 +51,7 @@
                                                 {% csrf_token %}
                                                 </form>
                                         </td>
-                                        <td>{{ cart.get_total_price }} руб.</td>
+                                        <td>{{ cart.total_price }} руб.</td>
                                     </tr>
                                 {% endwith %}
                             {% endfor %}
@@ -64,7 +64,7 @@
                             <h3>Итого</h3>
                             <hr>
                             <p>Товаров: {{ cart.items.count }}</p>
-                            <p>Стоимость: {{ cart.get_total_price }} руб.</p>
+                            <p>Стоимость: {{ cart.total_price }} руб.</p>
                             <hr>
                             <a href="#" class="btn btn-primary btn-block">Оформить заказ</a>
                         </div>
