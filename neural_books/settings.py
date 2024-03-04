@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     'store.apps.StoreConfig',
     'cart.apps.CartConfig',
+    'user.apps.UserConfig',
 ]
 
 MIDDLEWARE = [
@@ -64,7 +65,7 @@ ROOT_URLCONF = 'neural_books.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
