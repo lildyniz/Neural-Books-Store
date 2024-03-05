@@ -30,10 +30,13 @@
                 </div>
                 <div class="col-lg-3 col-md-12 d-none d-lg-block">
                     <div class="d-flex justify-content-end align-items-center">
-                        <a href="{% url "user:login" %}" class="text-white text-decoration-none me-3">Войти</a>
-                        <a href="{% url "user:logout" %}" class="text-white text-decoration-none me-3">Выйти</a>
-                        <a href="{% url 'user:profile' %}" class="btn  btn-dark">{% bs_icon 'file-person-fill' size='1.5em' %}</a>
-                        <a href="{% url 'cart:cart_detail' %}" class="btn  btn-dark">{% bs_icon 'basket2-fill' size='1.5em' %}</a>
+                        {% if not user.is_authenticated %}
+                            <a href="{% url "user:login" %}" class="text-white text-decoration-none me-3">Войти</a>
+                        {% else %}
+                            <a href="{% url "user:logout" %}" class="text-white text-decoration-none me-3">Выйти</a>
+                            <a href="{% url 'user:profile' %}" class="btn  btn-dark">{% bs_icon 'file-person-fill' size='1.5em' %}</a>
+                            <a href="{% url 'cart:cart_detail' %}" class="btn  btn-dark">{% bs_icon 'basket2-fill' size='1.5em' %}</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>

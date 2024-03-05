@@ -1,10 +1,10 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib import auth
 
 from store.models import Book
-from .forms import UserLoginForm
+from .forms import UserLoginForm, UserRegistrationForm
 
 def login(request):
     if request.method == 'POST':
@@ -24,16 +24,23 @@ def login(request):
                   {'form': form},)
 
 def logout(request):
-    
-    return render(request, 
-                  '', 
-                  {},)
+    auth.logout(request)
+    return redirect(reverse('store:index'))
 
 def registration(request):
-    
+
+    if request.method == 'POST':
+        form = UserRegistrationForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            user = form.instance
+            auth.login(request, user)
+            return HttpResponseRedirect(reverse('store:index'))
+    else:
+        form = UserRegistrationForm()
     return render(request, 
                   'user/registration.html', 
-                  {},)
+                  {'form': form},)
 
 def profile(request):
 

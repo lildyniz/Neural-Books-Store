@@ -8,13 +8,45 @@
 {% endblock title %}
 
 {% block content %}
-<div class="container text-center my-5">
-    <h2 class="mb-4">Рекомендуемое</h2>
-    <div id="carouselRecommended" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active" data-bs-interval="20000">
+<h1>Content..</h1>
+{% comment %}
+    <div class="container text-center my-5">
+        <h2 class="mb-4">Рекомендуемое</h2>
+        <div id="carouselRecommended" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active" data-bs-interval="20000">
+                    <div class="row justify-content-md-center">
+                        {% for book in books|slice:":6" %}
+                            <div class="col-md-auto">
+                                <div class="card text-center" style="width: 11rem;">
+                                    <div class="position-relative">
+                                        <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top width="250" height="280"" alt="{{ book.title }}"></a>
+                                        {% if book.discount %}
+                                            <span class="badge bg-dark position-absolute top-0 end-0" style="font-size: 18px; ">-{{ book.discount }}%</span>
+                                        {% endif %}
+                                    </div>
+                                    <div class="card-body">
+                                        <h6 class="card-title">{{ book.name|truncatechars:14 }}</h6>
+                                        <h6 class="card-subtitle mb-2">
+                                            {% for a in book.author.all %}
+                                                <a href="{{ a.get_absolute_url }}" class="text-muted text-decoration-none" style="font-size: 15px;">{{ a.name|truncatechars:14 }}</a>
+                                            {% endfor %}
+                                        </h6>
+                                        {% if book.discount %}
+                                            <a href="{{ book.get_absolute_url }}" class="btn btn-dark">{% bs_icon 'basket2-fill' size='0.9em' %}{{ book. }}₽</a>
+                                            <span class="text-decoration-line-through text-secondary" style="font-size: 10px;">{{ book.price }}</span>
+                                        {% else %}
+                                            <a href="{{ book.get_absolute_url }}" class="btn btn-dark">{% bs_icon 'basket2-fill' size='0.9em' %}{{ book.price }}₽</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>    
+                </div>
+            <div class="carousel-item" data-bs-interval="20000">
                 <div class="row justify-content-md-center">
-                    {% for book in books|slice:":6" %}
+                    {% for book in books|slice:"6:12" %}
                         <div class="col-md-auto">
                             <div class="card text-center" style="width: 11rem;">
                                 <div class="position-relative">
@@ -40,86 +72,11 @@
                             </div>
                         </div>
                     {% endfor %}
-                </div>    
+                </div>  
             </div>
-        <div class="carousel-item" data-bs-interval="20000">
-            <div class="row justify-content-md-center">
-                {% for book in books|slice:"6:12" %}
-                    <div class="col-md-auto">
-                        <div class="card text-center" style="width: 11rem;">
-                            <div class="position-relative">
-                                <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top width="250" height="280"" alt="{{ book.title }}"></a>
-                                {% if book.discount %}
-                                    <span class="badge bg-dark position-absolute top-0 end-0" style="font-size: 18px; ">-{{ book.discount }}%</span>
-                                {% endif %}
-                            </div>
-                            <div class="card-body">
-                                <h6 class="card-title">{{ book.name|truncatechars:14 }}</h6>
-                                <h6 class="card-subtitle mb-2">
-                                    {% for a in book.author.all %}
-                                        <a href="{{ a.get_absolute_url }}" class="text-muted text-decoration-none" style="font-size: 15px;">{{ a.name|truncatechars:14 }}</a>
-                                    {% endfor %}
-                                </h6>
-                                {% if book.discount %}
-                                    <a href="{{ book.get_absolute_url }}" class="btn btn-dark">{% bs_icon 'basket2-fill' size='0.9em' %}{{ book. }}₽</a>
-                                    <span class="text-decoration-line-through text-secondary" style="font-size: 10px;">{{ book.price }}</span>
-                                {% else %}
-                                    <a href="{{ book.get_absolute_url }}" class="btn btn-dark">{% bs_icon 'basket2-fill' size='0.9em' %}{{ book.price }}₽</a>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>  
-        </div>
-        <div class="carousel-item" data-bs-interval="20000">
-            <div class="row justify-content-md-center">
-                {% for book in books|slice:"12:18" %}
-                    <div class="col-md-auto">
-                        <div class="card text-center" style="width: 11rem;">
-                            <div class="position-relative">
-                                <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top width="250" height="280"" alt="{{ book.title }}"></a>
-                                {% if book.discount %}
-                                    <span class="badge bg-dark position-absolute top-0 end-0" style="font-size: 18px; ">-{{ book.discount }}%</span>
-                                {% endif %}
-                            </div>
-                            <div class="card-body">
-                                <h6 class="card-title">{{ book.name|truncatechars:14 }}</h6>
-                                <h6 class="card-subtitle mb-2">
-                                    {% for a in book.author.all %}
-                                        <a href="{{ a.get_absolute_url }}" class="text-muted text-decoration-none" style="font-size: 15px;">{{ a.name|truncatechars:14 }}</a>
-                                    {% endfor %}
-                                </h6>
-                                {% if book.discount %}
-                                    <a href="{{ book.get_absolute_url }}" class="btn btn-dark">{% bs_icon 'basket2-fill' size='0.9em' %}{{ book. }}₽</a>
-                                    <span class="text-decoration-line-through text-secondary" style="font-size: 10px;">{{ book.price }}</span>
-                                {% else %}
-                                    <a href="{{ book.get_absolute_url }}" class="btn btn-dark">{% bs_icon 'basket2-fill' size='0.9em' %}{{ book.price }}₽</a>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-        </div>
-        <button class="btn btn-dark" type="button" data-bs-target="#carouselRecommended" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Предыдущий</span>
-        </button>
-        <button class="btn btn-dark" type="button" data-bs-target="#carouselRecommended" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Следующий</span>
-        </button>
-    </div>
-</div>
-<div class="container text-center my-5">
-    <h2 class="mb-4">Новинки</h2>
-    <div id="carouselNew" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active" data-bs-interval="20000">
+            <div class="carousel-item" data-bs-interval="20000">
                 <div class="row justify-content-md-center">
-                    {% for book in books|slice:":6" %}
+                    {% for book in books|slice:"12:18" %}
                         <div class="col-md-auto">
                             <div class="card text-center" style="width: 11rem;">
                                 <div class="position-relative">
@@ -145,86 +102,56 @@
                             </div>
                         </div>
                     {% endfor %}
-                </div>    
+                </div>
             </div>
-        <div class="carousel-item" data-bs-interval="20000">
-            <div class="row justify-content-md-center">
-                {% for book in books|slice:"6:12" %}
-                    <div class="col-md-auto">
-                        <div class="card text-center" style="width: 11rem;">
-                            <div class="position-relative">
-                                <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top width="250" height="280"" alt="{{ book.title }}"></a>
-                                {% if book.discount %}
-                                    <span class="badge bg-dark position-absolute top-0 end-0" style="font-size: 18px; ">-{{ book.discount }}%</span>
-                                {% endif %}
-                            </div>
-                            <div class="card-body">
-                                <h6 class="card-title">{{ book.name|truncatechars:14 }}</h6>
-                                <h6 class="card-subtitle mb-2">
-                                    {% for a in book.author.all %}
-                                        <a href="{{ a.get_absolute_url }}" class="text-muted text-decoration-none" style="font-size: 15px;">{{ a.name|truncatechars:14 }}</a>
-                                    {% endfor %}
-                                </h6>
-                                {% if book.discount %}
-                                    <a href="{{ book.get_absolute_url }}" class="btn btn-dark">{% bs_icon 'basket2-fill' size='0.9em' %}{{ book.total_price }}₽</a>
-                                    <span class="text-decoration-line-through text-secondary" style="font-size: 10px;">{{ book.price }}</span>
-                                {% else %}
-                                    <a href="{{ book.get_absolute_url }}" class="btn btn-dark">{% bs_icon 'basket2-fill' size='0.9em' %}{{ book.price }}₽</a>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>  
-        </div>
-        <div class="carousel-item" data-bs-interval="20000">
-            <div class="row justify-content-md-center">
-                {% for book in books|slice:"12:18" %}
-                    <div class="col-md-auto">
-                        <div class="card text-center" style="width: 11rem;">
-                            <div class="position-relative">
-                                <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top width="250" height="280"" alt="{{ book.title }}"></a>
-                                {% if book.discount %}
-                                    <span class="badge bg-dark position-absolute top-0 end-0" style="font-size: 18px; ">-{{ book.discount }}%</span>
-                                {% endif %}
-                            </div>
-                            <div class="card-body">
-                                <h6 class="card-title">{{ book.name|truncatechars:14 }}</h6>
-                                <h6 class="card-subtitle mb-2">
-                                    {% for a in book.author.all %}
-                                        <a href="{{ a.get_absolute_url }}" class="text-muted text-decoration-none" style="font-size: 15px;">{{ a.name|truncatechars:14 }}</a>
-                                    {% endfor %}
-                                </h6>
-                                {% if book.discount %}
-                                    <a href="{{ book.get_absolute_url }}" class="btn btn-dark">{% bs_icon 'basket2-fill' size='0.9em' %}{{ book.total_price }}₽</a>
-                                    <span class="text-decoration-line-through text-secondary" style="font-size: 10px;">{{ book.price }}</span>
-                                {% else %}
-                                    <a href="{{ book.get_absolute_url }}" class="btn btn-dark">{% bs_icon 'basket2-fill' size='0.9em' %}{{ book.price }}₽</a>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
             </div>
+            <button class="btn btn-dark" type="button" data-bs-target="#carouselRecommended" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Предыдущий</span>
+            </button>
+            <button class="btn btn-dark" type="button" data-bs-target="#carouselRecommended" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Следующий</span>
+            </button>
         </div>
-        </div>
-        <button class="btn btn-dark" type="button" data-bs-target="#carouselNew" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Предыдущий</span>
-        </button>
-        <button class="btn btn-dark" type="button" data-bs-target="#carouselNew" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Следующий</span>
-        </button>
     </div>
-</div>
-<div class="container text-center my-5">
-    <h2 class="mb-4">Лучшее</h2>
-    <div id="carouselBest" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active" data-bs-interval="20000">
+    <div class="container text-center my-5">
+        <h2 class="mb-4">Новинки</h2>
+        <div id="carouselNew" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active" data-bs-interval="20000">
+                    <div class="row justify-content-md-center">
+                        {% for book in books|slice:":6" %}
+                            <div class="col-md-auto">
+                                <div class="card text-center" style="width: 11rem;">
+                                    <div class="position-relative">
+                                        <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top width="250" height="280"" alt="{{ book.title }}"></a>
+                                        {% if book.discount %}
+                                            <span class="badge bg-dark position-absolute top-0 end-0" style="font-size: 18px; ">-{{ book.discount }}%</span>
+                                        {% endif %}
+                                    </div>
+                                    <div class="card-body">
+                                        <h6 class="card-title">{{ book.name|truncatechars:14 }}</h6>
+                                        <h6 class="card-subtitle mb-2">
+                                            {% for a in book.author.all %}
+                                                <a href="{{ a.get_absolute_url }}" class="text-muted text-decoration-none" style="font-size: 15px;">{{ a.name|truncatechars:14 }}</a>
+                                            {% endfor %}
+                                        </h6>
+                                        {% if book.discount %}
+                                            <a href="{{ book.get_absolute_url }}" class="btn btn-dark">{% bs_icon 'basket2-fill' size='0.9em' %}{{ book. }}₽</a>
+                                            <span class="text-decoration-line-through text-secondary" style="font-size: 10px;">{{ book.price }}</span>
+                                        {% else %}
+                                            <a href="{{ book.get_absolute_url }}" class="btn btn-dark">{% bs_icon 'basket2-fill' size='0.9em' %}{{ book.price }}₽</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>    
+                </div>
+            <div class="carousel-item" data-bs-interval="20000">
                 <div class="row justify-content-md-center">
-                    {% for book in books|slice:":6" %}
+                    {% for book in books|slice:"6:12" %}
                         <div class="col-md-auto">
                             <div class="card text-center" style="width: 11rem;">
                                 <div class="position-relative">
@@ -250,169 +177,245 @@
                             </div>
                         </div>
                     {% endfor %}
-                </div>    
+                </div>  
             </div>
-        <div class="carousel-item" data-bs-interval="20000">
-            <div class="row justify-content-md-center">
-                {% for book in books|slice:"6:12" %}
-                    <div class="col-md-auto">
-                        <div class="card text-center" style="width: 11rem;">
-                            <div class="position-relative">
-                                <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top width="250" height="280"" alt="{{ book.title }}"></a>
-                                {% if book.discount %}
-                                    <span class="badge bg-dark position-absolute top-0 end-0" style="font-size: 18px; ">-{{ book.discount }}%</span>
-                                {% endif %}
-                            </div>
-                            <div class="card-body">
-                                <h6 class="card-title">{{ book.name|truncatechars:14 }}</h6>
-                                <h6 class="card-subtitle mb-2">
-                                    {% for a in book.author.all %}
-                                        <a href="{{ a.get_absolute_url }}" class="text-muted text-decoration-none" style="font-size: 15px;">{{ a.name|truncatechars:14 }}</a>
-                                    {% endfor %}
-                                </h6>
-                                {% if book.discount %}
-                                    <a href="{{ book.get_absolute_url }}" class="btn btn-dark">{% bs_icon 'basket2-fill' size='0.9em' %}{{ book.total_price }}₽</a>
-                                    <span class="text-decoration-line-through text-secondary" style="font-size: 10px;">{{ book.price }}</span>
-                                {% else %}
-                                    <a href="{{ book.get_absolute_url }}" class="btn btn-dark">{% bs_icon 'basket2-fill' size='0.9em' %}{{ book.price }}₽</a>
-                                {% endif %}
+            <div class="carousel-item" data-bs-interval="20000">
+                <div class="row justify-content-md-center">
+                    {% for book in books|slice:"12:18" %}
+                        <div class="col-md-auto">
+                            <div class="card text-center" style="width: 11rem;">
+                                <div class="position-relative">
+                                    <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top width="250" height="280"" alt="{{ book.title }}"></a>
+                                    {% if book.discount %}
+                                        <span class="badge bg-dark position-absolute top-0 end-0" style="font-size: 18px; ">-{{ book.discount }}%</span>
+                                    {% endif %}
+                                </div>
+                                <div class="card-body">
+                                    <h6 class="card-title">{{ book.name|truncatechars:14 }}</h6>
+                                    <h6 class="card-subtitle mb-2">
+                                        {% for a in book.author.all %}
+                                            <a href="{{ a.get_absolute_url }}" class="text-muted text-decoration-none" style="font-size: 15px;">{{ a.name|truncatechars:14 }}</a>
+                                        {% endfor %}
+                                    </h6>
+                                    {% if book.discount %}
+                                        <a href="{{ book.get_absolute_url }}" class="btn btn-dark">{% bs_icon 'basket2-fill' size='0.9em' %}{{ book.total_price }}₽</a>
+                                        <span class="text-decoration-line-through text-secondary" style="font-size: 10px;">{{ book.price }}</span>
+                                    {% else %}
+                                        <a href="{{ book.get_absolute_url }}" class="btn btn-dark">{% bs_icon 'basket2-fill' size='0.9em' %}{{ book.price }}₽</a>
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                {% endfor %}
-            </div>  
+                    {% endfor %}
+                </div>
+            </div>
+            </div>
+            <button class="btn btn-dark" type="button" data-bs-target="#carouselNew" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Предыдущий</span>
+            </button>
+            <button class="btn btn-dark" type="button" data-bs-target="#carouselNew" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Следующий</span>
+            </button>
         </div>
-        <div class="carousel-item" data-bs-interval="20000">
-            <div class="row justify-content-md-center">
-                {% for book in books|slice:"12:18" %}
-                    <div class="col-md-auto">
-                        <div class="card text-center" style="width: 11rem;">
-                            <div class="position-relative">
-                                <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top width="250" height="280"" alt="{{ book.title }}"></a>
-                                {% if book.discount %}
-                                    <span class="badge bg-dark position-absolute top-0 end-0" style="font-size: 18px; ">-{{ book.discount }}%</span>
-                                {% endif %}
+    </div>
+    <div class="container text-center my-5">
+        <h2 class="mb-4">Лучшее</h2>
+        <div id="carouselBest" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active" data-bs-interval="20000">
+                    <div class="row justify-content-md-center">
+                        {% for book in books|slice:":6" %}
+                            <div class="col-md-auto">
+                                <div class="card text-center" style="width: 11rem;">
+                                    <div class="position-relative">
+                                        <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top width="250" height="280"" alt="{{ book.title }}"></a>
+                                        {% if book.discount %}
+                                            <span class="badge bg-dark position-absolute top-0 end-0" style="font-size: 18px; ">-{{ book.discount }}%</span>
+                                        {% endif %}
+                                    </div>
+                                    <div class="card-body">
+                                        <h6 class="card-title">{{ book.name|truncatechars:14 }}</h6>
+                                        <h6 class="card-subtitle mb-2">
+                                            {% for a in book.author.all %}
+                                                <a href="{{ a.get_absolute_url }}" class="text-muted text-decoration-none" style="font-size: 15px;">{{ a.name|truncatechars:14 }}</a>
+                                            {% endfor %}
+                                        </h6>
+                                        {% if book.discount %}
+                                            <a href="{{ book.get_absolute_url }}" class="btn btn-dark">{% bs_icon 'basket2-fill' size='0.9em' %}{{ book.total_price }}₽</a>
+                                            <span class="text-decoration-line-through text-secondary" style="font-size: 10px;">{{ book.price }}</span>
+                                        {% else %}
+                                            <a href="{{ book.get_absolute_url }}" class="btn btn-dark">{% bs_icon 'basket2-fill' size='0.9em' %}{{ book.price }}₽</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
                             </div>
-                            <div class="card-body">
-                                <h6 class="card-title">{{ book.name|truncatechars:14 }}</h6>
-                                <h6 class="card-subtitle mb-2">
-                                    {% for a in book.author.all %}
-                                        <a href="{{ a.get_absolute_url }}" class="text-muted text-decoration-none" style="font-size: 15px;">{{ a.name|truncatechars:14 }}</a>
-                                    {% endfor %}
-                                </h6>
-                                {% if book.discount %}
-                                    <a href="{{ book.get_absolute_url }}" class="btn btn-dark">{% bs_icon 'basket2-fill' size='0.9em' %}{{ book.total_price }}₽</a>
-                                    <span class="text-decoration-line-through text-secondary" style="font-size: 10px;">{{ book.price }}</span>
-                                {% else %}
-                                    <a href="{{ book.get_absolute_url }}" class="btn btn-dark">{% bs_icon 'basket2-fill' size='0.9em' %}{{ book.price }}₽</a>
-                                {% endif %}
+                        {% endfor %}
+                    </div>    
+                </div>
+            <div class="carousel-item" data-bs-interval="20000">
+                <div class="row justify-content-md-center">
+                    {% for book in books|slice:"6:12" %}
+                        <div class="col-md-auto">
+                            <div class="card text-center" style="width: 11rem;">
+                                <div class="position-relative">
+                                    <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top width="250" height="280"" alt="{{ book.title }}"></a>
+                                    {% if book.discount %}
+                                        <span class="badge bg-dark position-absolute top-0 end-0" style="font-size: 18px; ">-{{ book.discount }}%</span>
+                                    {% endif %}
+                                </div>
+                                <div class="card-body">
+                                    <h6 class="card-title">{{ book.name|truncatechars:14 }}</h6>
+                                    <h6 class="card-subtitle mb-2">
+                                        {% for a in book.author.all %}
+                                            <a href="{{ a.get_absolute_url }}" class="text-muted text-decoration-none" style="font-size: 15px;">{{ a.name|truncatechars:14 }}</a>
+                                        {% endfor %}
+                                    </h6>
+                                    {% if book.discount %}
+                                        <a href="{{ book.get_absolute_url }}" class="btn btn-dark">{% bs_icon 'basket2-fill' size='0.9em' %}{{ book.total_price }}₽</a>
+                                        <span class="text-decoration-line-through text-secondary" style="font-size: 10px;">{{ book.price }}</span>
+                                    {% else %}
+                                        <a href="{{ book.get_absolute_url }}" class="btn btn-dark">{% bs_icon 'basket2-fill' size='0.9em' %}{{ book.price }}₽</a>
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                </div>  
             </div>
+            <div class="carousel-item" data-bs-interval="20000">
+                <div class="row justify-content-md-center">
+                    {% for book in books|slice:"12:18" %}
+                        <div class="col-md-auto">
+                            <div class="card text-center" style="width: 11rem;">
+                                <div class="position-relative">
+                                    <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top width="250" height="280"" alt="{{ book.title }}"></a>
+                                    {% if book.discount %}
+                                        <span class="badge bg-dark position-absolute top-0 end-0" style="font-size: 18px; ">-{{ book.discount }}%</span>
+                                    {% endif %}
+                                </div>
+                                <div class="card-body">
+                                    <h6 class="card-title">{{ book.name|truncatechars:14 }}</h6>
+                                    <h6 class="card-subtitle mb-2">
+                                        {% for a in book.author.all %}
+                                            <a href="{{ a.get_absolute_url }}" class="text-muted text-decoration-none" style="font-size: 15px;">{{ a.name|truncatechars:14 }}</a>
+                                        {% endfor %}
+                                    </h6>
+                                    {% if book.discount %}
+                                        <a href="{{ book.get_absolute_url }}" class="btn btn-dark">{% bs_icon 'basket2-fill' size='0.9em' %}{{ book.total_price }}₽</a>
+                                        <span class="text-decoration-line-through text-secondary" style="font-size: 10px;">{{ book.price }}</span>
+                                    {% else %}
+                                        <a href="{{ book.get_absolute_url }}" class="btn btn-dark">{% bs_icon 'basket2-fill' size='0.9em' %}{{ book.price }}₽</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            </div>
+            <button class="btn btn-dark" type="button" data-bs-target="#carouselBest" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Предыдущий</span>
+            </button>
+            <button class="btn btn-dark" type="button" data-bs-target="#carouselBest" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Следующий</span>
+            </button>
         </div>
-        </div>
-        <button class="btn btn-dark" type="button" data-bs-target="#carouselBest" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Предыдущий</span>
-        </button>
-        <button class="btn btn-dark" type="button" data-bs-target="#carouselBest" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Следующий</span>
-        </button>
     </div>
-</div>
-
-<!-- Footer -->
-<footer class="text-center text-lg-start bg-dark text-white mt-4">
-    <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom bg-light">
-    </section>
-    <!-- Section: Links  -->
-    <section class="">
-      <div class="container text-center text-md-start mt-5">
-        <!-- Grid row -->
-        <div class="row mt-3">
-          <!-- Grid column -->
-          <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-            <!-- Content -->
-            <h6 class="text-uppercase fw-bold mb-4">
-              <i class="fas fa-gem me-3"></i>Company name
-            </h6>
-            <p>
-              Here you can use rows and columns to organize your footer content. Lorem ipsum
-              dolor sit amet, consectetur adipisicing elit.
-            </p>
+    
+    <!-- Footer -->
+    <footer class="text-center text-lg-start bg-dark text-white mt-4">
+        <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom bg-light">
+        </section>
+        <!-- Section: Links  -->
+        <section class="">
+          <div class="container text-center text-md-start mt-5">
+            <!-- Grid row -->
+            <div class="row mt-3">
+              <!-- Grid column -->
+              <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                <!-- Content -->
+                <h6 class="text-uppercase fw-bold mb-4">
+                  <i class="fas fa-gem me-3"></i>Company name
+                </h6>
+                <p>
+                  Here you can use rows and columns to organize your footer content. Lorem ipsum
+                  dolor sit amet, consectetur adipisicing elit.
+                </p>
+              </div>
+              <!-- Grid column -->
+      
+              <!-- Grid column -->
+              <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                <!-- Links -->
+                <h6 class="text-uppercase fw-bold mb-4">
+                  Products
+                </h6>
+                <p>
+                  <a href="#!" class="text-reset">Angular</a>
+                </p>
+                <p>
+                  <a href="#!" class="text-reset">React</a>
+                </p>
+                <p>
+                  <a href="#!" class="text-reset">Vue</a>
+                </p>
+                <p>
+                  <a href="#!" class="text-reset">Laravel</a>
+                </p>
+              </div>
+              <!-- Grid column -->
+      
+              <!-- Grid column -->
+              <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                <!-- Links -->
+                <h6 class="text-uppercase fw-bold mb-4">
+                  Useful links
+                </h6>
+                <p>
+                  <a href="#!" class="text-reset">Pricing</a>
+                </p>
+                <p>
+                  <a href="#!" class="text-reset">Settings</a>
+                </p>
+                <p>
+                  <a href="#!" class="text-reset">Orders</a>
+                </p>
+                <p>
+                  <a href="#!" class="text-reset">Help</a>
+                </p>
+              </div>
+              <!-- Grid column -->
+      
+              <!-- Grid column -->
+              <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                <!-- Links -->
+                <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+                <p><i class="fas fa-home me-3"></i> New York, NY 10012, US</p>
+                <p>
+                  <i class="fas fa-envelope me-3"></i>
+                  info@example.com
+                </p>
+                <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
+                <p><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
+              </div>
+              <!-- Grid column -->
+            </div>
+            <!-- Grid row -->
           </div>
-          <!-- Grid column -->
-  
-          <!-- Grid column -->
-          <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-            <!-- Links -->
-            <h6 class="text-uppercase fw-bold mb-4">
-              Products
-            </h6>
-            <p>
-              <a href="#!" class="text-reset">Angular</a>
-            </p>
-            <p>
-              <a href="#!" class="text-reset">React</a>
-            </p>
-            <p>
-              <a href="#!" class="text-reset">Vue</a>
-            </p>
-            <p>
-              <a href="#!" class="text-reset">Laravel</a>
-            </p>
-          </div>
-          <!-- Grid column -->
-  
-          <!-- Grid column -->
-          <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-            <!-- Links -->
-            <h6 class="text-uppercase fw-bold mb-4">
-              Useful links
-            </h6>
-            <p>
-              <a href="#!" class="text-reset">Pricing</a>
-            </p>
-            <p>
-              <a href="#!" class="text-reset">Settings</a>
-            </p>
-            <p>
-              <a href="#!" class="text-reset">Orders</a>
-            </p>
-            <p>
-              <a href="#!" class="text-reset">Help</a>
-            </p>
-          </div>
-          <!-- Grid column -->
-  
-          <!-- Grid column -->
-          <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-            <!-- Links -->
-            <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
-            <p><i class="fas fa-home me-3"></i> New York, NY 10012, US</p>
-            <p>
-              <i class="fas fa-envelope me-3"></i>
-              info@example.com
-            </p>
-            <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
-            <p><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
-          </div>
-          <!-- Grid column -->
+        </section>
+        <!-- Section: Links  -->
+      
+        <!-- Copyright -->
+        <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+          © 2021 Copyright:
+          <a class="text-reset fw-bold" href="https://mdbootstrap.com/">MDBootstrap.com</a>
         </div>
-        <!-- Grid row -->
-      </div>
-    </section>
-    <!-- Section: Links  -->
-  
-    <!-- Copyright -->
-    <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-      © 2021 Copyright:
-      <a class="text-reset fw-bold" href="https://mdbootstrap.com/">MDBootstrap.com</a>
-    </div>
-    <!-- Copyright -->
-</footer>
-<!-- Footer -->
+        <!-- Copyright -->
+    </footer>
+    <!-- Footer -->
+{% endcomment %}
 {% endblock %}
