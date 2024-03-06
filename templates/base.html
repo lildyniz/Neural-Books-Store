@@ -1,7 +1,6 @@
 {% load bootstrap5 %}
 {% bootstrap_css %}
 {% bootstrap_javascript %}
-{% bootstrap_messages %}
 {% load bootstrap_icons %}
 {% load static %}
 {% load store_tags %}
@@ -82,6 +81,7 @@
     </nav>
     {% include "notifications.html" %}
     {% block content %}
-
     {% endblock %}
+    <script src="{% static "js/jquery/jquery-3.7.0.min.js" %}"></script>
+    <script src="{% static "js/jquery-ajax.js" %}"></script>
 </body>

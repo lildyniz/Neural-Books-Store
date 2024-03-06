@@ -1,10 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.contrib import auth
+from django.contrib import auth, messages
+from django.contrib.auth.decorators import login_required 
 
 from store.models import Book
-from .forms import UserLoginForm, UserRegistrationForm
+from .forms import UserLoginForm, UserRegistrationForm, UserProfileForm
 
 def login(request):
     if request.method == 'POST':
@@ -15,6 +16,7 @@ def login(request):
             user = auth.authenticate(username=username, password=password)
             if user:
                 auth.login(request, user)
+                messages.success(request, f"{username}, вы успешно вошли в аккаунт!")
                 return HttpResponseRedirect(reverse('store:index'))
     else:
         form = UserLoginForm()
@@ -23,7 +25,9 @@ def login(request):
                   'user/login.html', 
                   {'form': form},)
 
+@login_required
 def logout(request):
+    messages.success(request, f"{request.user.username}, вы вышли из аккаунта.")
     auth.logout(request)
     return redirect(reverse('store:index'))
 
@@ -35,6 +39,7 @@ def registration(request):
             form.save()
             user = form.instance
             auth.login(request, user)
+            messages.success(request, f"{user.username}, вы успешно зарегистрировались!")
             return HttpResponseRedirect(reverse('store:index'))
     else:
         form = UserRegistrationForm()
@@ -42,9 +47,18 @@ def registration(request):
                   'user/registration.html', 
                   {'form': form},)
 
+@login_required
 def profile(request):
 
-    books = Book.objects.filter(available=True)
+    if request.method == 'POST':
+        form = UserProfileForm(data=request.POST, instance=request.user, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Профиль успешно обновлен!")
+            return HttpResponseRedirect(reverse('user:profile'))
+    else:
+        form = UserProfileForm(instance=request.user)
+    
     return render(request, 
                   'user/profile.html', 
-                  {'books': books},)
+                  {'form': form})
