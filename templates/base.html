@@ -4,7 +4,9 @@
 {% load bootstrap_icons %}
 {% load static %}
 {% load store_tags %}
+{% load cart_tags %}
 
+{% user_carts request as carts %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -34,8 +36,9 @@
                         {% else %}
                             <a href="{% url "user:logout" %}" class="text-white text-decoration-none me-3">Выйти</a>
                             <a href="{% url 'user:profile' %}" class="btn  btn-dark">{% bs_icon 'file-person-fill' size='1.5em' %}</a>
-                            <a href="{% url 'user:cart' %}" class="btn  btn-dark">{% bs_icon 'basket2-fill' size='1.5em' %}</a>
-                        {% endif %}
+                            {% endif %}
+                        <a href="{% url 'user:cart' %}" class="btn  btn-dark">{% bs_icon 'basket2-fill' size='1.5em' %}
+                            <span id="goods-in-cart-count">{{ carts.total_quantity_cart }}</span> </a>
                     </div>
                 </div>
             </div>

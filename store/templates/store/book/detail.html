@@ -47,12 +47,9 @@
                         <p>
                             <strong>ID товара:</strong> {{ book.display_id }}
                         </p>
-                        <form action="{% url 'cart:cart_add' book.id %}" method="post">
-                            {{ cart_product_form }}
-                            {% csrf_token %}
-                            <input type="submit" value="Add to cart">
-                        </form>
+                        <a href="{% url "cart:cart_add" book.slug %}" class="btn btn-dark mb-3">{% bs_icon 'basket2-fill' size='0.9em' %}Добавить в корзину</a>
                     </div>
+                    <br>
                     <hr>
                         {% comment %}
                         <div class="col-md-6">
