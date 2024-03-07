@@ -34,8 +34,9 @@
                     </div>
                     <div class="col p-0"><strong>{{cart.product_price}} ₽</strong></div>
                     <div class="col p-0">
-                        <a href="{% url "cart:cart_remove" %}" class="remove-from-cart" data-cart-id="">
-                            {% bs_icon 'trash' size='1.5em' %}
+                        <a href="{% url "cart:cart_remove" %}" class="remove-from-cart" data-cart-id="{{ cart.id }}">
+                            {% csrf_token %} 
+                            {% bs_icon 'trash' size='1.5em' %} 
                         </a>
                     </div>
                 </div>
