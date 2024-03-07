@@ -97,10 +97,20 @@
                             {% endfor %}
                         </h6>
                         {% if book.discount %}
-                            <a href="{% url "cart:cart_add" book.slug %}" class="btn btn-dark">{% bs_icon 'basket2-fill' size='0.9em' %}{{ book.total_price }}₽</a>
+                            <a href="{% url "cart:cart_add" %}"     
+                                class="btn btn-dark add-to-cart"
+                                data-product-id="{{ book.id }}">
+                                {% csrf_token %}
+                                {% bs_icon 'basket2-fill' size='0.9em' %}{{ book.total_price }}₽
+                            </a>
                             <span class="text-decoration-line-through text-secondary" style="font-size: 10px;">{{ book.price }}</span>
                         {% else %}
-                            <a href="{% url "cart:cart_add" book.slug %}" class="btn btn-dark">{% bs_icon 'basket2-fill' size='0.9em' %}{{ book.price }}₽</a>
+                            <a href="{% url "cart:cart_add"%}" 
+                                class="btn btn-dark add-to-cart"
+                                data-product-id="{{ book.id }}">
+                                {% csrf_token %}
+                                {% bs_icon 'basket2-fill' size='0.9em' %}{{ book.price }}₽
+                            </a>
                         {% endif %}
                     </div>
                 </div>

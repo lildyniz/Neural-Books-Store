@@ -36,9 +36,37 @@
                         {% else %}
                             <a href="{% url "user:logout" %}" class="text-white text-decoration-none me-3">Выйти</a>
                             <a href="{% url 'user:profile' %}" class="btn  btn-dark">{% bs_icon 'file-person-fill' size='1.5em' %}</a>
-                            {% endif %}
-                        <a href="{% url 'user:cart' %}" class="btn  btn-dark">{% bs_icon 'basket2-fill' size='1.5em' %}
-                            <span id="goods-in-cart-count">{{ carts.total_quantity_cart }}</span> </a>
+                        {% endif %}
+                        {% comment %} <a href="{% url 'user:cart' %}" class="btn  btn-dark">{% bs_icon 'basket2-fill' size='1.5em' %}
+                            <span id="goods-in-cart-count">{{ carts.total_quantity_cart }}</span> </a> {% endcomment %}
+                        
+                        <div>
+                            <button type="button" class="btn btn-dark btn-secondary d-flex" id="modalButton"
+                                aria-expanded="false">
+                                {% bs_icon 'basket2-fill' size='1.5em' %}
+                                <span id="goods-in-cart-count">{{ carts.total_quantity_cart }}</span>
+                            </button>
+                        </div>
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h3 class="text-center mb-4">Корзина</h3>
+                                        <div class="container" id="cart-items-container">
+
+                                            {% include "cart/includes/included_cart.html" %}
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

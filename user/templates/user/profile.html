@@ -91,10 +91,11 @@
                         {% include "cart/includes/included_cart.html" %}
                         <!-- Закончилась разметка корзины -->
                     </div>
-                    <div class="container mt-5 text-center">
-                        <a class="btn btn-dark" href="#">
-                            Оформить заказ
-                        </a>
+                    {% if carts %}
+                        <div class="container mt-5 text-center">
+                            <a class="btn btn-dark" href="">Оформить заказ</a>
+                        </div>
+                    {% endif %}
                     </div>
                 </div>
             </div> 
