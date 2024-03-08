@@ -16,8 +16,8 @@ class BookAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
     
     list_display = ['name', 'slug', 'price', 'discount', 
-                    'total_price', 'available',
+                    'total_price', 'available', 'quantity',
                     'written', 'created', 'image']
-    list_editable = ['price', 'discount', 'available']
+    list_editable = ['price', 'discount', 'available', 'quantity']
     list_filter = ['price', 'discount', 'available', 'created']
     search_fields = ['name', 'description']

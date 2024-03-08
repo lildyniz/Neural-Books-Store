@@ -43,19 +43,20 @@ class Author(models.Model):
 
 
 class Book(models.Model):
-    category = models.ManyToManyField(Category, related_name="books")
-    author = models.ManyToManyField(Author, related_name="author_books")
-    name = models.CharField(max_length=100)
-    slug = models.SlugField(max_length=100)
-    image = models.ImageField(upload_to="books/%Y/%m/%d", blank=True)
-    description = models.TextField(blank=True)
-    available = models.BooleanField(default=True)
-    written = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(2024)])
-    created = models.DateTimeField(auto_now_add=True)
+    category = models.ManyToManyField(Category, related_name="books", verbose_name='Категория')
+    author = models.ManyToManyField(Author, related_name="author_books", verbose_name='Автор')
+    name = models.CharField(max_length=100, verbose_name='Название')
+    slug = models.SlugField(max_length=100, verbose_name='URL')
+    image = models.ImageField(upload_to="books/%Y/%m/%d", blank=True, verbose_name='Изображение')
+    description = models.TextField(blank=True, verbose_name='Описание')
+    available = models.BooleanField(default=True, verbose_name='Доступный')
+    quantity = models.PositiveIntegerField(default=0, verbose_name='Количество')
+    written = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(2024)], verbose_name='Написана')
+    created = models.DateTimeField(auto_now_add=True, verbose_name='Создана')
 
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    discount = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100)])
-    total_price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Цена')
+    discount = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name='Скидка')
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Цена со скидкой')
 
     class Meta:
         ordering = ["name"]

@@ -93,7 +93,7 @@
                     </div>
                     {% if carts %}
                         <div class="container mt-5 text-center">
-                            <a class="btn btn-dark" href="">Оформить заказ</a>
+                            <a class="btn btn-dark" href="{% url "order:create_order" %}">Оформить заказ</a>
                         </div>
                     {% endif %}
                     </div>

@@ -7,6 +7,7 @@
 {% load cart_tags %}
 
 {% user_carts request as carts %}
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -62,6 +63,11 @@
                                             {% include "cart/includes/included_cart.html" %}
 
                                         </div>
+                                        {% if carts %}
+                                            <div class="container mt-5 text-center">
+                                                <a class="btn btn-dark" href="{% url "order:create_order" %}">Оформить заказ</a>
+                                            </div>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
