@@ -22,6 +22,7 @@ class Order(models.Model):
     payment_on_get = models.BooleanField(default=False, verbose_name='Оплата при получении')
     is_paid = models.BooleanField(default=False, verbose_name='Оплачено')
     status = models.CharField(max_length=50, default='В обработке', verbose_name='Статус заказа')
+    total_amount_order = models.PositiveIntegerField(default=0, verbose_name='Общая сумма заказа')
 
     class Meta:
         db_table = "order"

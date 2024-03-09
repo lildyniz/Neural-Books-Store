@@ -63,11 +63,6 @@
                                             {% include "cart/includes/included_cart.html" %}
 
                                         </div>
-                                        {% if carts %}
-                                            <div class="container mt-5 text-center">
-                                                <a class="btn btn-dark" href="{% url "order:create_order" %}">Оформить заказ</a>
-                                            </div>
-                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -78,6 +73,7 @@
             </div>
         </div>
     </header>
+
     <nav class="container-fluid bg-light">
         <div class="container">
             <ul class="nav nav-pills justify-content-center">
@@ -85,10 +81,10 @@
                     <a href="/" class="nav-link text-dark">Главная</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle link-dark" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle link-dark" href="#" id="DropdownMenuCategories" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Категории
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="DropdownMenuCategories">
                         {% tag_categories as categories %}
                         {% for c in categories %}
                             {% if c.name != 'all' %}
@@ -109,16 +105,17 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    {% comment %} <a href="{% url 'store:book_list' all %}" class="nav-link text-dark">Все книги</a> {% endcomment %}
                     {% tag_category_all as all %}
                     <a href="{{ all.get_absolute_url }}" class="nav-link text-dark">Все книги</a>
                 </li>
             </ul>
         </div>
     </nav>
+    
     {% include "notifications.html" %}
     {% block content %}
     {% endblock %}
     <script src="{% static "js/jquery/jquery-3.7.0.min.js" %}"></script>
+    <script src="{% static "js/popper/popper-2.10.2.min.js" %}"></script>
     <script src="{% static "js/jquery-ajax.js" %}"></script>
 </body>
