@@ -3,6 +3,7 @@ from .models import Category, Author, Book
 from .utils import q_search
 from cart.forms import CartAddProductForm
 from django.core.paginator import Paginator
+from django.db.models import Q
 
 
 def index(request):
@@ -63,11 +64,35 @@ def book_list(request, slug=None):
 def book_detail(request, id, slug):
     book = get_object_or_404(Book, id=id, slug=slug, available=True)
     cart_product_form = CartAddProductForm()
+
+    author_ids = book.author.values_list("id", flat=True)
+    category_ids = book.category.values_list("id", flat=True)
+
+    # similar_books = Book.objects.filter(
+    #     Q(author__id__in=author_ids) | Q(category__id__in=category_ids)
+    #     ).exclude(pk=book.pk).prefetch_related('author', 'category').order_by('pk')[:5]
+
+    from django.db.models import Count
+
+    similar_books = Book.objects.filter(
+        Q(author__id__in=author_ids) | Q(category__id__in=category_ids)
+        ).exclude(pk=book.pk).annotate(
+        match_count=Count(
+            'author',
+            filter=Q(author__id__in=author_ids),
+        )
+        + Count(
+            'category',
+            filter=Q(category__id__in=category_ids),
+        )).order_by('-match_count')[:5]
+
+    
     return render(
         request,
         "store/book/detail.html",
         {
             "book": book,
             "cart_product_form": cart_product_form,
+            "similar_books": similar_books
         },
     )

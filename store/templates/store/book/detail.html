@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load bootstrap_icons %}
+{% load static %}
 
 
 {% block title %}
@@ -56,14 +57,45 @@
                     </div>
                     <br>
                     <hr>
-                        {% comment %}
-                        <div class="col-md-6">
-                            <form action="{% url 'add_to_cart' book.id %}" method="post">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-primary">Добавить в корзину</button>
-                            </form>
-                        </div>
-                        {% endcomment %}
+                    <p><strong>Похожее:</strong></p>
+                    <div class="row justify-content-md-center">
+                        {% for book in similar_books %}
+                            <div class="col-md-auto">
+                                <div class="card text-center mb-3" style="width: 9rem;">
+                                    <div class="position-relative">
+                                        <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top width="250" height="250"" alt="{{ book.title }}"></a>
+                                        {% if book.discount %}
+                                            <span class="badge bg-dark position-absolute top-0 end-0" style="font-size: 18px; ">-{{ book.discount }}%</span>
+                                        {% endif %}
+                                    </div>
+                                    <div class="card-body">
+                                        <h6 class="card-title">{{ book.name|truncatechars:11 }}</h6>
+                                        <h6 class="card-subtitle mb-2">
+                                            {% for a in book.author.all %}
+                                                <a href="{{ a.get_absolute_url }}" class="text-muted text-decoration-none" style="font-size: 15px;">{{ a.name|truncatechars:11 }}</a>
+                                            {% endfor %}
+                                        </h6>
+                                        {% if book.discount %}
+                                            <a href="{% url "cart:cart_add" %}"     
+                                                class="btn btn-dark add-to-cart"
+                                                data-product-id="{{ book.id }}">
+                                                {% csrf_token %}
+                                                {% bs_icon 'basket2-fill' size='0.9em' %}{{ book.total_price }}₽
+                                            </a>
+                                            
+                                        {% else %}
+                                            <a href="{% url "cart:cart_add"%}" 
+                                                class="btn btn-dark add-to-cart"
+                                                data-product-id="{{ book.id }}">
+                                                {% csrf_token %}
+                                                {% bs_icon 'basket2-fill' size='0.9em' %}{{ book.price }}₽
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
