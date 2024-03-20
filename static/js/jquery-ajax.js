@@ -210,4 +210,105 @@ $(document).ready(function () {
             $("#deliveryAddressField").hide();
         }
     });
+
+    // Ловим собыитие клика по кнопке добавить в корзину
+    $(document).on("click", ".favorite_add", function (e) {
+        // Блокируем его базовое действие
+        e.preventDefault();
+
+        // Берем элемент счетчика в значке корзины и берем оттуда значение
+        var UserFavoriteCount = $("#user_favorite_products_count");
+        var FavoriteCount = parseInt(UserFavoriteCount.text() || 0);
+
+        // Получаем id товара из атрибута data-product-id
+        var product_id = $(this).data("product-id");
+
+        // Из атрибута href берем ссылку на контроллер django
+        var add_to_favorite_url = $(this).attr("href");
+
+        // делаем post запрос через ajax не перезагружая страницу
+        $.ajax({
+            type: "POST",
+            url: add_to_favorite_url,
+            data: {
+                product_id: product_id,
+                csrfmiddlewaretoken: $("[name=csrfmiddlewaretoken]").val(),
+            },
+            success: function (data) {
+                // Сообщение
+                successMessage.html(data.message);
+                successMessage.fadeIn(400);
+                // Через 7сек убираем сообщение
+                setTimeout(function () {
+                    successMessage.fadeOut(400);
+                }, 7000);
+
+                // Увеличиваем количество товаров в корзине (отрисовка в шаблоне)
+                FavoriteCount++;
+                UserFavoriteCount.text(FavoriteCount);
+
+                $(".favorite_add[data-product-id=" + product_id + "]").hide();
+                $(".favorite_remove[data-product-id=" + product_id + "]").show();
+
+                // // Меняем содержимое корзины на ответ от django (новый отрисованный фрагмент разметки корзины)
+                // var current_page = $("#book-items-container");
+                // current_page.html(data.cart_items_html);
+
+            },
+
+            error: function (data) {
+                console.log("Ошибка при добавлении товара в корзину");
+            },
+        });
+    });
+
+
+
+
+    // Ловим собыитие клика по кнопке добавить в корзину
+    $(document).on("click", ".favorite_remove", function (e) {
+        // Блокируем его базовое действие
+        e.preventDefault();
+
+        // Берем элемент счетчика в значке корзины и берем оттуда значение
+        var UserFavoriteCount = $("#user_favorite_products_count");
+        var FavoriteCount = parseInt(UserFavoriteCount.text() || 0);
+
+        // Получаем id товара из атрибута data-product-id
+        var product_id = $(this).data("product-id");
+
+        // Из атрибута href берем ссылку на контроллер django
+        var remove_to_favorite_url = $(this).attr("href");
+
+        // делаем post запрос через ajax не перезагружая страницу
+        $.ajax({
+            type: "POST",
+            url: remove_to_favorite_url,
+            data: {
+                product_id: product_id,
+                csrfmiddlewaretoken: $("[name=csrfmiddlewaretoken]").val(),
+            },
+            success: function (data) {
+                // Сообщение
+                successMessage.html(data.message);
+                successMessage.fadeIn(400);
+                // Через 7сек убираем сообщение
+                setTimeout(function () {
+                    successMessage.fadeOut(400);
+                }, 7000);
+
+                // Уменьшаем количество товаров в избранном
+                FavoriteCount--;
+                UserFavoriteCount.text(FavoriteCount);
+
+                $(".favorite_remove[data-product-id=" + product_id + "]").hide();
+                $(".favorite_add[data-product-id=" + product_id + "]").show();
+
+            },
+
+            error: function (data) {
+                console.log("Ошибка при добавлении товара в корзину");
+            },
+        });
+    });
 });

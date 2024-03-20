@@ -1,84 +1,17 @@
 {% extends "base.html" %}
 {% load static %}
-{% debug %}
 {% load bootstrap_icons %}
 {% load store_tags %}
 
-{% block title %}
-    {% if category %}{{ category.name }}{% else %}Books{% endif %}
-{% endblock title %}
-
+{% block title %}Favourites{% endblock title %}
 
 {% block content %}
-
-{% if author %}
-    <div class="container my-5">
-        <div class="row">
-            <div class="col-md-3">
-                <div class="text-center">
-                    <img src="{{ author.image.url }}" class="rounded-circle" style="width: 100px; height: 100px;">
-                    <h3 class="my-2">{{ author.name }}</h3>
-                    <p class="text-muted">{{ author.birth }}, {{ author.country }}</p>
-                </div>
-            </div>
-            <div class="col-md-9">
-                <p>{{ author.description }}</p>
-            </div>
-        </div>
-    </div>
-{% endif %}
-    
 <div class="container text-center my-5 position-relative">
-    {% if request.GET.q and books %}
-        <h2 class="mb-4">Результаты поиска по запросу "{{ request.GET.q }}":</h2>
-    {% elif books %}
-        <h2 class="mb-4">Все книги {% if category %}в жанре {{ category.name }} {% elif author %}автора {% else %}{% endif %}</h2>
+    {% if books %}
+        <h2 class="mb-4">Избранное</h2>
     {% else %}
         <h2 class="mb-4">Упс.. Ничего не найдено..</h2>
     {% endif %}
-
-    {% if books %}
-        <!-- Форма фильтров -->
-        <div class="dropdown mb-2 ps-5 position-absolute top-0">
-            <button class="btn btn-secondary dropdown-toggle btn-dark" type="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Фильтры
-            </button>
-            <form action="{% if request.GET.q %} {% url "store:search" %} {% else %} {% url "store:book_list" slug_url %} {% endif %}" method="get" class="dropdown-menu bg-dark" data-bs-theme="dark">
-                <div class="form-check text-white mx-3">
-                    <input class="form-check-input" type="checkbox" name="with_discount" id="flexCheckDefault" value="on" {% if request.GET.with_discount == 'on' %}checked{% endif %}>
-                    {% if request.GET.q %}
-                        <input type="hidden" name="q" value="{{request.GET.q}}">
-                    {% endif %}
-                    <label class="form-check-label" for="flexCheckDefault">
-                        Товары по акции
-                    </label>
-                </div>
-                <p class="text-white mx-3 mt-3">Сортировать:</p>
-                <div class="form-check text-white mx-3">
-                    <input class="form-check-input" type="radio" name="order_by" id="flexRadioDefault1" value="default"
-                    {% if not request.GET.order_by or request.GET.order_by == default %}checked{% endif %}>
-                    <label class="form-check-label" for="flexRadioDefault1">
-                        По умолчанию
-                    </label>
-                </div>
-                <div class="form-check text-white mx-3">
-                    <input class="form-check-input" type="radio" name="order_by" id="flexRadioDefault2" value="total_price" {% if request.GET.order_by == 'total_price' %}checked{% endif %}>
-                    <label class="form-check-label" for="flexRadioDefault2">
-                        От дешевых к дорогим
-                    </label>
-                </div>
-                <div class="form-check text-white mx-3">
-                    <input class="form-check-input" type="radio" name="order_by" id="flexRadioDefault3" value="-total_price" {% if request.GET.order_by == '-total_price' %}checked{% endif %}>
-                    <label class="form-check-label" for="flexRadioDefault3">
-                        От дорогих к дешевым
-                    </label>
-                </div>
-                <button type="submit" class="btn btn-primary mx-3 mt-3">Применить</button>
-            </form>
-        </div>
-    {% endif %}
-
     <div class="row justify-content-md-center" id="book-items-container">
         {% for book in books %}
             <div class="col-md-auto">
@@ -132,9 +65,8 @@
             </div>
         {% endfor %}
     </div>
-</div>
 
-{% if books %}
+    {% if books %}
     <nav aria-label="Пагинация">
         <ul class="pagination justify-content-center">
             <li class="page-item {% if not books.has_previous %}disabled{% endif %}">
@@ -156,5 +88,6 @@
             </li>
         </ul>
     </nav>
-{% endif %}
+    {% endif %}
+</div>
 {% endblock content %}

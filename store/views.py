@@ -28,6 +28,9 @@ def book_list(request, slug=None):
 
     category = None
     author = None
+
+    if request.user.is_authenticated:
+        user = request.user
     
     if slug == 'all':
         books = Book.objects.filter(available=True)
@@ -56,7 +59,8 @@ def book_list(request, slug=None):
             "category": category,
             "author": author,
             "books": current_page,
-            'slug_url': slug
+            'slug_url': slug,
+            'user': user
         },
     )
 
@@ -67,10 +71,6 @@ def book_detail(request, id, slug):
 
     author_ids = book.author.values_list("id", flat=True)
     category_ids = book.category.values_list("id", flat=True)
-
-    # similar_books = Book.objects.filter(
-    #     Q(author__id__in=author_ids) | Q(category__id__in=category_ids)
-    #     ).exclude(pk=book.pk).prefetch_related('author', 'category').order_by('pk')[:5]
 
     from django.db.models import Count
 

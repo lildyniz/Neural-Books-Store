@@ -37,10 +37,9 @@
                         {% else %}
                             <a href="{% url "user:logout" %}" class="text-white text-decoration-none me-3">Выйти</a>
                             <a href="{% url 'user:profile' %}" class="btn  btn-dark">{% bs_icon 'file-person-fill' size='1.5em' %}</a>
+                            <a href="{% url 'user:favorite_list' %}" class="btn  btn-dark">{% bs_icon 'bookmark' size='1.5em' %}
+                                <span id="user_favorite_products_count">{{ user.favorite_products.count }}</span></a>      
                         {% endif %}
-                        {% comment %} <a href="{% url 'user:cart' %}" class="btn  btn-dark">{% bs_icon 'basket2-fill' size='1.5em' %}
-                            <span id="goods-in-cart-count">{{ carts.total_quantity_cart }}</span> </a> {% endcomment %}
-                        
                         <div>
                             <button type="button" class="btn btn-dark btn-secondary d-flex" id="modalButton"
                                 aria-expanded="false">

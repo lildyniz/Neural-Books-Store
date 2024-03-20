@@ -1,9 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
+from django.template.loader import render_to_string
 from django.urls import reverse
 from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Prefetch
+from django.core.paginator import Paginator
 
 from store.models import Book
 from cart.models import Cart
@@ -94,3 +96,60 @@ def profile(request):
 
 def cart(request):
     return render(request, 'user/cart.html')
+
+
+@login_required
+def favorite_list(request):
+    page = request.GET.get('page', 1)
+    user = request.user
+    books = user.favorite_products.all()
+    paginator = Paginator(books, 12)
+    current_page = paginator.page(page)
+    return render(request, 'user/favorite_list.html', {"books": current_page})
+
+@login_required
+def favorite_add(request):
+
+    product_id = request.POST.get("product_id")
+    product = Book.objects.get(id=product_id)
+    user = request.user
+
+    user.favorite_products.add(product)
+    user.save()
+
+    # books = Book.objects.all()
+    # referer = request.META["PATH_INFO"]
+    # books_items_html = render_to_string(
+    #     referer, {"carts": books}, request=request
+    # )
+
+    response_data = {
+        "message": "Товар добавлен в избранное",
+        "is_favorited": True,
+        "product_id": product_id,
+        # "books_items_html": books_items_html,
+    }
+
+
+    return JsonResponse(response_data)
+
+
+@login_required
+def favorite_remove(request):
+    
+    product_id = request.POST.get("product_id")
+    product = Book.objects.get(id=product_id)
+    user = request.user
+
+    user.favorite_products.remove(product)
+    user.save()
+
+    response_data = {
+        "message": "Товар удален из избранного",
+        "is_favorited": True,
+        "product_id": product_id,
+        # "books_items_html": books_items_html,
+    }
+
+
+    return JsonResponse(response_data)
